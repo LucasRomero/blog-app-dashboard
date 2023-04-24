@@ -11,6 +11,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { environment } from 'src/environments/environment';
+import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { environment } from 'src/environments/environment';
     HeaderComponent,
     FooterComponent,
     DashboardComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,

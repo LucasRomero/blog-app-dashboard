@@ -1,32 +1,74 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 bg-secondary-theme p-5 shadow-effect">
-      <h3 class="text-center text-theme-primary"> New Categories </h3>
+      <h3 class="text-center text-theme-primary"> {{ formStatus }} Categories </h3>
       <p class="text-center mb-5"> You cand add new categories from here..! </p>
 
-      <form class="form-inline text-center" #categoryForm = 'ngForm' (ngSubmit)="onSubmit(categoryForm)">
+      <form class="form-inline text-center" #categoryForm='ngForm' (ngSubmit)="onSubmit(categoryForm)">
         <div class="form-group col-md-10">
           <input 
-          type="text" 
-          name="category" 
-          class="form-control shadow-effect" 
-          placeholder="Add New Categories"
-          #newCategory = 'ngModel'
-          ngModel 
-          required
-          [ngClass]="{ 'is-invalid': newCategory.touched && newCategory.invalid }"
-          >
+            type="text" 
+            class="form-control shadow-effect" 
+            style="width: 100%;" 
+            name="category" 
+            [(ngModel)] = 'formCategory'
+            #newCategory='ngModel'
+            required
+            placeholder="Add New Categories"
+            [ngClass]="{ 'is-invalid': newCategory.touched && newCategory.invalid }">
+        </div>
+
+        <div class="col-md-2">
+          <button class="btn btn-block btn-info mb-2 btn-theme" [disabled]="categoryForm.invalid"> {{ formStatus }} Category
+          </button>
+        </div>
+        <div class="col-md-10">
           <div class="alert alert-danger" *ngIf="newCategory.touched && newCategory.invalid">
             Category field is required
           </div>
         </div>
-
-        <div class="col-md-2">
-          <button class="btn btn-block btn-info mb-2 btn-theme" [disabled]="categoryForm.invalid" > Add Category </button>
-        </div>
-
+        
       </form>
 
     </div>
   </div>
+
+  <div class="row mt-5 mv-5">
+
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+      <div class="card shadow-effect">
+        <div class="card-body">
+          <table class="table row-border hover">
+            <thead>
+              <!-- table row -->
+              <tr>
+                <!-- table header -->
+                <th>No</th>
+                <th>Category</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- table row -->
+              <tr *ngFor="let category of categoryArray; let i = index">
+                <!-- table cellk -->
+                <td>{{ i }}</td>
+                <td>{{ category.data.category }}</td>
+                <td></td>
+                <td> 
+                  <button class="btn btn-sm btn-warning" (click)="onEdit(category.data.category, category.id)" > Edit </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3"></div>
+
+  </div>
+
 </div>

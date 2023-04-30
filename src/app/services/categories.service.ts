@@ -56,4 +56,17 @@ export class CategoriesService {
         console.log(err);
       });
   }
+
+  deleteData(id: string): void {
+    this.afs
+      .collection('categories')
+      .doc(id)
+      .delete()
+      .then((docRef) => {
+        this.toastr.success('Data Deleted..!');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }

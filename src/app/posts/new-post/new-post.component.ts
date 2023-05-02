@@ -7,9 +7,22 @@ import { Component } from '@angular/core';
 })
 export class NewPostComponent {
   permalink: string = '';
+  imgSrc: any = './assets/placeholder-image.png';
+  selectedImg: any;
 
   onTitleChanged(event: any): void {
     const title = event.target.value;
+
     this.permalink = title.replace(/\s/g, '-');
+  }
+
+  showPreview(event: any) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imgSrc = e.target?.result;
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+    this.selectedImg = event.target.files[0];
   }
 }

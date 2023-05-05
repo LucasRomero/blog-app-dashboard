@@ -7,7 +7,7 @@
   </div>
 
 
-  <form [formGroup]="postForm">
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
 
     <div class="row">
       <div class="col-md-7">
@@ -81,7 +81,7 @@
             [ngClass]="{ 'is-invalid': fc['category'].touched && fc['category'].invalid }"
             >
             <option value="" disabled> Please select a category </option>
-            <option *ngFor="let category of categories"> {{ category.data.category }} </option>
+            <option *ngFor="let category of categories" value="{{ category.id }}-{{ category.data.category }}" > {{ category.data.category }} </option>
           </select>
 
           <div *ngIf="fc['category'].errors && fc['category'].errors['required']">

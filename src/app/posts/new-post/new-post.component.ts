@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CategoriesService } from '../../services/categories.service';
+import { Post } from 'src/app/models/post';
 
 @Component({
   selector: 'app-new-post',
@@ -54,5 +55,30 @@ export class NewPostComponent implements OnInit {
 
     reader.readAsDataURL(event.target.files[0]);
     this.selectedImg = event.target.files[0];
+  }
+
+  onSubmit() {
+    console.log(this.postForm.value);
+
+    // split the value of select
+    let [id, name] = this.postForm.value.category.split('-');
+
+    const postData: Post = {
+      title: this.postForm.value.title,
+      permalink: this.postForm.value.permalink,
+      category: {
+        categoryId: id,
+        category: name,
+      },
+      postImgPath: '',
+      exceprt: this.postForm.value.exceprt,
+      content: this.postForm.value.content,
+      isFeatured: false,
+      views: 0,
+      status: 'new',
+      createAt: new Date(),
+    };
+
+    console.log(postData);
   }
 }

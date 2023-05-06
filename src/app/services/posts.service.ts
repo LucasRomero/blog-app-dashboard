@@ -1,7 +1,11 @@
 import { Injectable, inject } from '@angular/core';
+import { map } from 'rxjs';
+import { Router } from '@angular/router';
+
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ToastrService } from 'ngx-toastr';
+
 import { Post } from '../models/post';
 
 @Injectable({
@@ -11,8 +15,24 @@ export class PostsService {
   private storage = inject(AngularFireStorage);
   private afs = inject(AngularFirestore);
   private toastr = inject(ToastrService);
+  private router = inject(Router);
 
   constructor() {}
+
+  loadData() {
+    return this.afs
+      .collection('posts')
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, data };
+          });
+        })
+      );
+  }
 
   uploadImage(selectedImage: any, postData: Post) {
     const filePath = `postIMG/${Date.now()}`;
@@ -42,6 +62,7 @@ export class PostsService {
       .add(postData)
       .then((docRef) => {
         this.toastr.success('Data Insert Successfuly');
+        this.router.navigate(['/posts']);
       })
       .catch((err) => {
         console.log(err);

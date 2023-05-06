@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -43,6 +44,7 @@ import { NewPostComponent } from './posts/new-post/new-post.component';
     AngularEditorModule,
     HttpClientModule,
     ReactiveFormsModule,
+    AngularFireStorageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

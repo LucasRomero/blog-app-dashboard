@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CategoriesService } from '../../services/categories.service';
+import { PostsService } from 'src/app/services/posts.service';
+
 import { Post } from 'src/app/models/post';
 
 @Component({
@@ -12,8 +14,8 @@ import { Post } from 'src/app/models/post';
 export class NewPostComponent implements OnInit {
   private categoryService = inject(CategoriesService);
   private fb = inject(FormBuilder);
+  private postService = inject(PostsService);
 
-  permalink: string = '';
   imgSrc: any = './assets/placeholder-image.png';
   selectedImg: any;
 
@@ -24,7 +26,7 @@ export class NewPostComponent implements OnInit {
   constructor() {
     this.postForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(10)]],
-      permalink: [{ value: '', disabled: true }, Validators.required],
+      permalink: [{ disabled: true }, Validators.required],
       excerpt: ['', [Validators.required, Validators.minLength(50)]],
       category: ['', Validators.required],
       postImg: ['', Validators.required],
@@ -71,7 +73,7 @@ export class NewPostComponent implements OnInit {
         category: name,
       },
       postImgPath: '',
-      exceprt: this.postForm.value.exceprt,
+      excerpt: this.postForm.value.excerpt,
       content: this.postForm.value.content,
       isFeatured: false,
       views: 0,
@@ -80,5 +82,9 @@ export class NewPostComponent implements OnInit {
     };
 
     console.log(postData);
+
+    this.postService.uploadImage(this.selectedImg, postData);
+    this.postForm.reset();
+    this.imgSrc = './assets/placeholder-image.png';
   }
 }

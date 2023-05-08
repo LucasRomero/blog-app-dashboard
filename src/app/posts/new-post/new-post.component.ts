@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { CategoriesService } from '../../services/categories.service';
 import { PostsService } from 'src/app/services/posts.service';
@@ -15,6 +16,7 @@ export class NewPostComponent implements OnInit {
   private categoryService = inject(CategoriesService);
   private fb = inject(FormBuilder);
   private postService = inject(PostsService);
+  private route = inject(ActivatedRoute);
 
   imgSrc: any = './assets/placeholder-image.png';
   selectedImg: any;
@@ -23,7 +25,16 @@ export class NewPostComponent implements OnInit {
 
   postForm: FormGroup;
 
+  post: any;
+  idPost: string = '';
+
+  formStatus: string = 'Add New';
+
   constructor() {
+    this.route.queryParams.subscribe((val) => {
+      this.idPost = val['id'];
+    });
+
     this.postForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(10)]],
       permalink: ['', Validators.required],
@@ -38,6 +49,29 @@ export class NewPostComponent implements OnInit {
     this.categoryService.loadData().subscribe((val) => {
       this.categories = val;
     });
+
+    this.inicializar();
+  }
+
+  inicializar(): void {
+    if (this.idPost) {
+      this.postService.loadOneData(this.idPost).subscribe((post) => {
+        console.log(post);
+        this.post = post;
+
+        this.postForm.setValue({
+          title: this.post.title,
+          permalink: this.post.permalink,
+          excerpt: this.post.excerpt,
+          category: `${this.post.category.categoryId}-${this.post.category.category}`,
+          postImg: '',
+          content: this.post.content,
+        });
+
+        this.imgSrc = this.post.postImgPath;
+        this.formStatus = 'Edit';
+      });
+    }
   }
 
   get fc() {
@@ -83,7 +117,7 @@ export class NewPostComponent implements OnInit {
 
     console.log(postData);
 
-    this.postService.uploadImage(this.selectedImg, postData);
+    this.postService.uploadImage(this.selectedImg, postData, this.idPost);
     this.postForm.reset();
     this.imgSrc = './assets/placeholder-image.png';
   }

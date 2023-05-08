@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -34,7 +34,11 @@ export class PostsService {
       );
   }
 
-  uploadImage(selectedImage: any, postData: Post) {
+  loadOneData(id: string) {
+    return this.afs.doc(`posts/${id}`).valueChanges();
+  }
+
+  uploadImage(selectedImage: any, postData: Post, id: string = '') {
     const filePath = `postIMG/${Date.now()}`;
     console.log(filePath);
 
@@ -49,8 +53,13 @@ export class PostsService {
         .subscribe((URL) => {
           postData.postImgPath = URL;
 
+          if (id) {
+            this.updateData(id, postData);
+          } else {
+            this.saveData(postData);
+          }
+
           // save post data
-          this.saveData(postData);
         });
     });
   }
@@ -67,5 +76,16 @@ export class PostsService {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  updateData(id: string, postData: Post) {
+    this.afs
+      .doc(`posts/${id}`)
+      .update(postData)
+      .then(() => {
+        this.toastr.success('Data Updated Successfully');
+        this.router.navigate(['/posts']);
+      })
+      .catch((err) => {});
   }
 }

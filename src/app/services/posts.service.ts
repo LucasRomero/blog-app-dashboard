@@ -88,4 +88,24 @@ export class PostsService {
       })
       .catch((err) => {});
   }
+
+  deleteImage(postImgPath: string, id: string) {
+    this.storage.storage
+      .refFromURL(postImgPath)
+      .delete()
+      .then(() => {
+        this.deleteData(id);
+      })
+      .catch((err) => {});
+  }
+
+  deleteData(id: string) {
+    this.afs
+      .doc(`posts/${id}`)
+      .delete()
+      .then(() => {
+        this.toastr.success('Data Deleted..!');
+      })
+      .catch((err) => {});
+  }
 }

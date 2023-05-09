@@ -74,6 +74,15 @@ export class NewPostComponent implements OnInit {
     }
   }
 
+  getImage() {
+    // Create a new File object
+    const myFile = new File(['Hello World!'], 'myFile.txt', {
+      type: 'text/plain',
+    });
+
+    // Now let's create a DataTransfer to get a FileList
+  }
+
   get fc() {
     return this.postForm.controls;
   }
@@ -116,9 +125,10 @@ export class NewPostComponent implements OnInit {
     };
 
     console.log(postData);
-
-    this.postService.uploadImage(this.selectedImg, postData, this.idPost);
-    this.postForm.reset();
-    this.imgSrc = './assets/placeholder-image.png';
+    // seleccionarselectedImg y cargarlo en el input file y listo
+    // console.log(this.selectedImg);
+    // this.postService.uploadImage(this.selectedImg, postData, this.idPost);
+    // this.postForm.reset();
+    // this.imgSrc = './assets/placeholder-image.png';
   }
 }

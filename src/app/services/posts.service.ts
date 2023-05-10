@@ -108,4 +108,14 @@ export class PostsService {
       })
       .catch((err) => {});
   }
+
+  markFeatured(id: string, featuredData: Partial<Post>) {
+    this.afs
+      .doc(`posts/${id}`)
+      .update(featuredData)
+      .then(() => {
+        this.toastr.info('Featured Status Updated');
+      })
+      .catch((err) => {});
+  }
 }

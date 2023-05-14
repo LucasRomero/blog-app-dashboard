@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,10 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  onSubmit(loginForm: NgForm): void {
+  private authService = inject(AuthService);
+
+  onSubmit(loginForm: any): void {
     console.log(loginForm);
+    this.authService.login(loginForm.email, loginForm.password);
   }
 }

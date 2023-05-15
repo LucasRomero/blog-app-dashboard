@@ -16,7 +16,7 @@ export class AuthService {
   private toastr = inject(ToastrService);
   private router = inject(Router);
 
-  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private readonly loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 

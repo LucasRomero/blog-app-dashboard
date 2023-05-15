@@ -14,9 +14,12 @@ export class HeaderComponent implements OnInit {
   isLoggedIn$: Observable<boolean> | undefined;
 
   ngOnInit(): void {
-    this.userEmail = JSON.parse(localStorage.getItem('user')!).email;
+    const user = JSON.parse(localStorage.getItem('user')!);
+    if (user) {
+      this.userEmail = user.email;
 
-    this.isLoggedIn$ = this.authService.isLoggedIn();
+      this.isLoggedIn$ = this.authService.isLoggedIn();
+    }
   }
 
   onLogOut(): void {

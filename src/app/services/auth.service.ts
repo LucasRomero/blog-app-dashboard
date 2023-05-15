@@ -16,11 +16,12 @@ export class AuthService {
 
   constructor() {}
 
-  login(email: string, password: string) {
+  login(email: string, password: string): void {
     this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         this.toastr.success('Logged In Successfully');
+        this.loadUser();
         this.router.navigate(['/']);
       })
       .catch((error) => {
@@ -29,6 +30,19 @@ export class AuthService {
           closeButton: true,
         });
       });
+  }
+
+  loadUser(): void {
+    this.afAuth.authState.subscribe((user) => {
+      localStorage.setItem('user', JSON.stringify(user));
+    });
+  }
+
+  logOut() {
+    this.afAuth.signOut().then(() => {
+      this.toastr.success('User Logged Out Succesfully');
+      this.router.navigate(['/login']);
+    });
   }
 
   getCodeError(code: string) {

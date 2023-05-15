@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { FirebaseCodeErrorEnum } from '../enums/firebase-code-error';
 
+import { BehaviorSubject, Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,6 +15,8 @@ export class AuthService {
   private afAuth = inject(AngularFireAuth);
   private toastr = inject(ToastrService);
   private router = inject(Router);
+
+  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 
@@ -23,6 +27,7 @@ export class AuthService {
         this.toastr.success('Logged In Successfully');
         this.loadUser();
         this.router.navigate(['/']);
+        this.loggedIn.next(true);
       })
       .catch((error) => {
         console.log('', error);
@@ -41,8 +46,14 @@ export class AuthService {
   logOut() {
     this.afAuth.signOut().then(() => {
       this.toastr.success('User Logged Out Succesfully');
+      localStorage.removeItem('user');
+      this.loggedIn.next(false);
       this.router.navigate(['/login']);
     });
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedIn.asObservable();
   }
 
   getCodeError(code: string) {

@@ -124,11 +124,9 @@ export class NewPostComponent implements OnInit {
       createAt: new Date(),
     };
 
-    console.log(postData);
     // seleccionarselectedImg y cargarlo en el input file y listo
-    // console.log(this.selectedImg);
-    // this.postService.uploadImage(this.selectedImg, postData, this.idPost);
-    // this.postForm.reset();
-    // this.imgSrc = './assets/placeholder-image.png';
+    this.postService.uploadImage(this.selectedImg, postData, this.idPost);
+    this.postForm.reset();
+    this.imgSrc = './assets/placeholder-image.png';
   }
 }

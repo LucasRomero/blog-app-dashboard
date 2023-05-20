@@ -37,7 +37,7 @@
                 <td width="10"> {{ i+1 }} </td>
                 <td width="200"> <img src="{{ post.data.postImgPath }}" class="img img-fluid" alt="image"> </td>
                 <td width="200"> {{ post.data.title }} </td>
-                <td width="300"> {{ post.data.excerpt }} </td>
+                <td width="300" class="truncate-text"> {{ post.data.excerpt }} </td>
                 <td> {{ post.data.category.category }} </td>
                 <td> {{ post.data.createAt.toMillis() | date }} </td>
                 <td>

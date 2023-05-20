@@ -56,3 +56,9 @@ input[type="password"] {
   border: none;
   background-color: var(--primary-color);
 }
+
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

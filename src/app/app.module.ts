@@ -29,6 +29,7 @@ import { LoginComponent } from './auth/login/login.component';
 
 // Enviroment
 import { environment } from 'src/environments/environment';
+import { SubscribersComponent } from './subscribers/subscribers.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { environment } from 'src/environments/environment';
     AllPostComponent,
     NewPostComponent,
     LoginComponent,
+    SubscribersComponent,
   ],
   imports: [
     BrowserModule,

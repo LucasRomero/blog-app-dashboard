@@ -9,6 +9,7 @@ import { NewPostComponent } from './posts/new-post/new-post.component';
 import { LoginComponent } from './auth/login/login.component';
 
 import { authGuard } from './services/auth.guard';
+import { SubscribersComponent } from './subscribers/subscribers.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'posts/new',
     component: NewPostComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'subscribers',
+    component: SubscribersComponent,
     canActivate: [authGuard],
   },
 ];

@@ -1,6 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { SubscribersService } from '../services/subscribers.service';
 
+import {
+  NgbActiveModal,
+  NgbModal,
+  NgbModalRef,
+} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-subscribers',
   templateUrl: './subscribers.component.html',
@@ -8,6 +14,10 @@ import { SubscribersService } from '../services/subscribers.service';
 })
 export class SubscribersComponent implements OnInit {
   private subService = inject(SubscribersService);
+  private modalService = inject(NgbModal);
+
+  modalReference!: NgbModalRef;
+  id = '';
 
   subscribersArray: any[] = [];
 
@@ -17,7 +27,16 @@ export class SubscribersComponent implements OnInit {
     });
   }
 
-  onDelete(id: string) {
-    this.subService.deleteData(id);
+  onDelete() {
+    if (this.id) {
+      this.subService.deleteData(this.id);
+    }
+    this.modalReference.close();
+    this.id = '';
+  }
+
+  openModal(content: any, id: string) {
+    this.id = id;
+    this.modalReference = this.modalService.open(content);
   }
 }

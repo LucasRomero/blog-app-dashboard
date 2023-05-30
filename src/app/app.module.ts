@@ -16,6 +16,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Components
 import { AppComponent } from './app.component';
@@ -56,6 +57,7 @@ import { SubscribersComponent } from './subscribers/subscribers.component';
     ReactiveFormsModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

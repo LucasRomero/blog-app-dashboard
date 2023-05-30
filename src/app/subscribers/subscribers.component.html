@@ -1,3 +1,17 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Delete</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+    <p>Do you want to delete the item?...</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="onDelete()">Yes</button>
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close()">No</button>
+	</div>
+</ng-template>
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -35,7 +49,8 @@
                 <td> {{ subscriber.data.email }} </td>
 
                 <td>
-                  <button class="btn btn-sm btn-danger ml-2" (click)="onDelete(subscriber.id)"> Delete </button>
+                  <button class="btn btn-sm btn-danger ml-2" (click)="openModal(content, subscriber.id)"> Delete
+                  </button>
                 </td>
               </tr>
             </tbody>
